@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import  { useState, useCallback } from 'react'
 import PropTypes from "prop-types";
 import { useAutocomplete } from "@mui/base/useAutocomplete";
@@ -49,6 +50,8 @@ const Root = styled("div")(
 
 const InputWrapper = styled("div")(
   ({ theme }) => `
+  max-height: 100px;
+  overflow-y: auto;
   width: 300px;
   border: 1px solid ${theme.palette.mode === "dark" ? "#434343" : "#d9d9d9"};
   background-color: ${theme.palette.mode === "dark" ? "#141414" : "#fff"};
@@ -185,8 +188,9 @@ const Listbox = styled("ul")(
 );
 
 const baseURL = "http://universities.hipolabs.com/search";
+// eslint-disable-next-line react/prop-types
 export default function CustomizedHook({validationConfig}) {
-  const [specValue, setSpecValue] = useState("");
+  const [specValue, setSpecValue] = useState("india");
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -205,6 +209,7 @@ export default function CustomizedHook({validationConfig}) {
     id: "customized-hook-demo",
     defaultValue: [],
     multiple: true,
+    disableCloseOnSelect: true,
     options,
     getOptionLabel: (option) => option.name,
     onInputChange: (event, value) => {
@@ -250,6 +255,9 @@ export default function CustomizedHook({validationConfig}) {
     const handleSpecChange = (event) => {
     setSpecValue(event.target.value);
   };
+  console.log({groupedOptions})
+  console.log({value})
+
 
   return (
     <Root>
@@ -281,6 +289,7 @@ export default function CustomizedHook({validationConfig}) {
           <Listbox {...getListboxProps()}>
             {groupedOptions.map((option, index) => {
               const { key, ...optionProps } = getOptionProps({ option, index });
+              console.log({optionProps})
               return (
                 <li key={option.name} {...optionProps}>
                   <span>{option.name}</span>
